@@ -1,0 +1,1212 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="arduino_functions" id="culjxDt1NeVttbfvkGbI" x="-334" y="-550">
+    <statement name="SETUP_FUNC">
+      <block type="serial_setup" id="pSpZ^P6lEBbFc3au^=sf">
+        <field name="SERIAL_ID">Serial</field>
+        <field name="SPEED">115200</field>
+        <next>
+          <block type="io_digitalwrite" id="F;_7E!bk7AS]q}KCA7Pj">
+            <field name="PIN">33</field>
+            <comment pinned="false" h="80" w="160">Coming Home Ausgang aus</comment>
+            <value name="STATE">
+              <block type="io_highlow" id="?Y9_!V]M7uXbD]|+=Z~b">
+                <field name="STATE">LOW</field>
+              </block>
+            </value>
+            <next>
+              <block type="io_digitalwrite" id="5!sY~0ap`B?705mQW3Jm">
+                <field name="PIN">32</field>
+                <comment pinned="false" h="80" w="160">Blinker an (initial, absichtlich als Signalisierung für Programmstart)</comment>
+                <value name="STATE">
+                  <block type="io_highlow" id="f4+R~8,y[={?L.uJ:bxW">
+                    <field name="STATE">HIGH</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="II-yxPD!{kK/MI*:Mn~.">
+                    <field name="VAR">cBlinkCountOpen</field>
+                    <comment pinned="false" h="80" w="160">Konstanten</comment>
+                    <value name="VALUE">
+                      <block type="math_number" id="4U_o-Pxlh:xIjApoZC,p">
+                        <field name="NUM">5</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="Ac[A0PQf_q)]xJABQ]Cr">
+                        <field name="VAR">cBlinkCountClose</field>
+                        <value name="VALUE">
+                          <block type="math_number" id="ZeQnMnp#]QB#-|Lu^xuD">
+                            <field name="NUM">3</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="/)=d*y0u~5U7@vv1KqA`">
+                            <field name="VAR">cComingHomeCount</field>
+                            <value name="VALUE">
+                              <block type="math_number" id="yA7bN2@tTwpzl(|%eJ_Z">
+                                <field name="NUM">20</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="UV9:POL8qe+1B}z(Ehsm">
+                                <field name="VAR">cLightValuesCountNeeded</field>
+                                <value name="VALUE">
+                                  <block type="math_number" id=",u-?i5iro:d`ej5`kzdk">
+                                    <field name="NUM">10</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="variables_set" id="%2175)Q,yEMZ-0R[1%WX">
+                                    <field name="VAR">cLightMinimum</field>
+                                    <value name="VALUE">
+                                      <block type="math_number" id="08WIR/V8Q9LL|MYVt@Eo">
+                                        <field name="NUM">2500</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set" id="{T0bYa^rO|IqlA.Z2`mh">
+                                        <field name="VAR">iInitZvOpen</field>
+                                        <comment pinned="false" h="80" w="160">Variablen für letzte Zustände / Bestimmung von Zustandsänderungen</comment>
+                                        <value name="VALUE">
+                                          <block type="logic_boolean" id="]Q+1lwmUD(h^qDP/Yik{">
+                                            <field name="BOOL">TRUE</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="variables_set" id="VBpP97u/VTaupD`y,P=|">
+                                            <field name="VAR">iInitZvClose</field>
+                                            <value name="VALUE">
+                                              <block type="logic_boolean" id="LhDE(g(Tp4A)([QY[+VM">
+                                                <field name="BOOL">TRUE</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="variables_set" id="oVdf7yECY)Rph/pE;nmk">
+                                                <field name="VAR">iInitIgnition</field>
+                                                <value name="VALUE">
+                                                  <block type="logic_boolean" id=",E|#W#A|P)Kj*LJ=x)uQ">
+                                                    <field name="BOOL">TRUE</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="variables_set" id="w_H+5LKYRI2tZXDH(U~b">
+                                                    <field name="VAR">iInfoCounter</field>
+                                                    <comment pinned="false" h="80" w="160">Interne Zähler</comment>
+                                                    <value name="VALUE">
+                                                      <block type="math_number" id="UbZGXN_H59Irh)x.#5_#">
+                                                        <field name="NUM">30</field>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="variables_set" id="*3d,#;%=ak71+{ege~x=">
+                                                        <field name="VAR">iBlinkCount</field>
+                                                        <value name="VALUE">
+                                                          <block type="math_number" id="u%gKzM8|ye.%^v1jghZ4">
+                                                            <field name="NUM">0</field>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="variables_set" id="fiEBpgq+JefWs5HTkG`*">
+                                                            <field name="VAR">iComingHomeCount</field>
+                                                            <value name="VALUE">
+                                                              <block type="math_number" id="W+BlZ`RC_ty([2@m{[Ah">
+                                                                <field name="NUM">0</field>
+                                                              </block>
+                                                            </value>
+                                                            <next>
+                                                              <block type="variables_set" id="S2K!Q.:u]-@5#G=uh2LE">
+                                                                <field name="VAR">iLightValues</field>
+                                                                <value name="VALUE">
+                                                                  <block type="math_number" id="LPWiIg;xB.^,bK^sB(vm">
+                                                                    <field name="NUM">0</field>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="variables_set" id="Y(miEPq4(?fPXt):jJVi">
+                                                                    <field name="VAR">iLightValuesCount</field>
+                                                                    <value name="VALUE">
+                                                                      <block type="math_number" id="NB|Un%+/^PR@iCAYZMo6">
+                                                                        <field name="NUM">0</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="variables_set" id=".Yb12ArlO9(ZktMFi|Mr">
+                                                                        <field name="VAR">iLightAverage</field>
+                                                                        <value name="VALUE">
+                                                                          <block type="math_number" id="z78iE%r@cNKAYNCt1r}S">
+                                                                            <field name="NUM">4096</field>
+                                                                          </block>
+                                                                        </value>
+                                                                        <next>
+                                                                          <block type="variables_set" id="@O^mWCHwBu~Y57,i_EH)">
+                                                                            <field name="VAR">iComingHomeStatus</field>
+                                                                            <comment pinned="false" h="80" w="160">Statusvariablen</comment>
+                                                                            <value name="VALUE">
+                                                                              <block type="logic_boolean" id="^?6nM}?l`{z5DXB6)uQ.">
+                                                                                <field name="BOOL">FALSE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="variables_set" id="*Hmt--2Y8M`wM`f!sqaa">
+                                                                                <field name="VAR">iLightStatus</field>
+                                                                                <value name="VALUE">
+                                                                                  <block type="logic_boolean" id="!GpYTa+!`Vz;H1BF^(D`">
+                                                                                    <field name="BOOL">FALSE</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <next>
+                                                                                  <block type="variables_set" id="/KGdgSw0jq*r994T*[L)">
+                                                                                    <field name="VAR">eTimeStart</field>
+                                                                                    <comment pinned="false" h="80" w="160">Laufzeitzähler</comment>
+                                                                                    <value name="VALUE">
+                                                                                      <block type="time_millis" id="6[!d~VICf9rl8R5gS9J:"></block>
+                                                                                    </value>
+                                                                                    <next>
+                                                                                      <block type="serial_print" id="UMjRvtBV]/*RlaK{Gv=e">
+                                                                                        <field name="SERIAL_ID">Serial</field>
+                                                                                        <field name="NEW_LINE">FALSE</field>
+                                                                                        <value name="CONTENT">
+                                                                                          <block type="text" id="kZ%f@_rALNHu]PoR,*1c">
+                                                                                            <field name="TEXT">Started program at </field>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <next>
+                                                                                          <block type="serial_print" id="5nH20-wr9_z.Tkr+;%O4">
+                                                                                            <field name="SERIAL_ID">Serial</field>
+                                                                                            <field name="NEW_LINE">TRUE</field>
+                                                                                            <value name="CONTENT">
+                                                                                              <block type="variables_get" id="Za_A@cH[QKKJR?4jDC()">
+                                                                                                <field name="VAR">eTimeStart</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </next>
+                                                                                      </block>
+                                                                                    </next>
+                                                                                  </block>
+                                                                                </next>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </next>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </next>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="LOOP_FUNC">
+      <block type="variables_set" id="H{gL{|Ew!peTbB%@5VO:">
+        <field name="VAR">eTime</field>
+        <value name="VALUE">
+          <block type="time_millis" id="_D}2~nEB6*OFvAm[b?G6"></block>
+        </value>
+        <next>
+          <block type="variables_set" id="50WoYhTWSuC,8[C,-ozI">
+            <field name="VAR">iZvOpen</field>
+            <comment pinned="false" h="80" w="160">Zustände der digitalen Eingänge einlesen</comment>
+            <value name="VALUE">
+              <block type="io_digitalread" id="r;bdcu]5t56~sF=Tji[l">
+                <field name="PIN">18</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="N`:W7!1,fO:)}oqPyjxB">
+                <field name="VAR">iZvClose</field>
+                <value name="VALUE">
+                  <block type="io_digitalread" id="7%?q~jUdEFp3!#TW@Glr">
+                    <field name="PIN">19</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="Z#od%7=XvAua9wgvVWJ}">
+                    <field name="VAR">iIgnition</field>
+                    <value name="VALUE">
+                      <block type="io_digitalread" id="xw|iKR!xlcdNkC`84M9i">
+                        <field name="PIN">17</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="Ak+_6i!Cu|%(9m_=v1)Q">
+                        <field name="VAR">iLight</field>
+                        <value name="VALUE">
+                          <block type="io_analogread" id=":IeciNvW6PyuaY@ff3#V">
+                            <field name="PIN">34</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="controls_if" id="L[oQ!%!1Tfnv1pL;kJ?L">
+                            <comment pinned="false" h="80" w="160">Zustandsänderung von Zentralverriegelung öffnen</comment>
+                            <value name="IF0">
+                              <block type="logic_compare" id="2u|2upGUL%zk+|Il{2cd">
+                                <field name="OP">NEQ</field>
+                                <value name="A">
+                                  <block type="variables_get" id="K3s3`9l}4j)lzkIV#tBk">
+                                    <field name="VAR">iZvOpen</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="variables_get" id="Q?V/ueNRYPPfQ[)t.jEx">
+                                    <field name="VAR">iInitZvOpen</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <statement name="DO0">
+                              <block type="variables_set" id="Lnk,-4!{UUP3HXKQWI{y">
+                                <field name="VAR">iInitZvOpen</field>
+                                <value name="VALUE">
+                                  <block type="variables_get" id="XCI(YFJcnh`F^YV?*jeh">
+                                    <field name="VAR">iZvOpen</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="serial_print" id="2P4JoG5t*#ku?z5hH1tI">
+                                    <field name="SERIAL_ID">Serial</field>
+                                    <field name="NEW_LINE">FALSE</field>
+                                    <value name="CONTENT">
+                                      <block type="text" id="2XW#_rEYG%?v@r%{()O_">
+                                        <field name="TEXT">ZvOpen changed to </field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="serial_print" id="c!C?mqH5O|CcO/MlZ7=p">
+                                        <field name="SERIAL_ID">Serial</field>
+                                        <field name="NEW_LINE">TRUE</field>
+                                        <value name="CONTENT">
+                                          <block type="variables_get" id="[Q[ptz5.Gs7l!~62Z|bU">
+                                            <field name="VAR">iZvOpen</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="controls_if" id="lL`iJ~ciiF5}h378{X4?">
+                                            <comment pinned="false" h="80" w="160">Blinker und Coming Home nur wenn Eingang auf Masse</comment>
+                                            <value name="IF0">
+                                              <block type="logic_compare" id="?|:u4kh1`_c:k;i@)[w[">
+                                                <field name="OP">EQ</field>
+                                                <value name="A">
+                                                  <block type="variables_get" id="l3.T3Fd6,54QsDus6F87">
+                                                    <field name="VAR">iInitZvOpen</field>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="logic_boolean" id="AZWx.D}.m4%6Im%mxh`!">
+                                                    <field name="BOOL">FALSE</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <statement name="DO0">
+                                              <block type="variables_set" id="*|!)vxTr[Tk6h.:-vp]@">
+                                                <field name="VAR">iBlinkCount</field>
+                                                <value name="VALUE">
+                                                  <block type="variables_get" id="9|=C*]{Tg_L|-v6]2W#r">
+                                                    <field name="VAR">cBlinkCountOpen</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="variables_set" id="DP=fUl:iz8_pTF?kr;P9">
+                                                    <field name="VAR">iComingHomeCount</field>
+                                                    <value name="VALUE">
+                                                      <block type="variables_get" id="YH}[1LaIoitkFBMX4@h@">
+                                                        <field name="VAR">cComingHomeCount</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </statement>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </statement>
+                            <next>
+                              <block type="controls_if" id="[cF46o16@10%z]z:eUH/">
+                                <comment pinned="false" h="80" w="160">Zustandsänderung von Zentralverriegelung schließen</comment>
+                                <value name="IF0">
+                                  <block type="logic_compare" id="|zCalYKyD7asXmU?I2yx">
+                                    <field name="OP">NEQ</field>
+                                    <value name="A">
+                                      <block type="variables_get" id="iy1khV6,5Vx*`?+b3wU[">
+                                        <field name="VAR">iZvClose</field>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="variables_get" id="MS8,!k-)u6[S*U|5Ju#m">
+                                        <field name="VAR">iInitZvClose</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <statement name="DO0">
+                                  <block type="variables_set" id="?t;[yX2Rh|{b!jG_uNAF">
+                                    <field name="VAR">iInitZvClose</field>
+                                    <value name="VALUE">
+                                      <block type="variables_get" id="z`LO[p%ZyB]kW:jf!*8r">
+                                        <field name="VAR">iZvClose</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="serial_print" id="r?7uk3.i~=hAxGuaG(At">
+                                        <field name="SERIAL_ID">Serial</field>
+                                        <field name="NEW_LINE">FALSE</field>
+                                        <value name="CONTENT">
+                                          <block type="text" id="A5=hJ/2Qe*p;YZ56u:Qg">
+                                            <field name="TEXT">ZvClose changed to </field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="serial_print" id="#,EeM/S|=~FHNEoYVK}]">
+                                            <field name="SERIAL_ID">Serial</field>
+                                            <field name="NEW_LINE">TRUE</field>
+                                            <value name="CONTENT">
+                                              <block type="variables_get" id="ipPc//]gmOtf;Jtor2*M">
+                                                <field name="VAR">iZvClose</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="controls_if" id="[(]3(+y.^rX3nzjbBOSL">
+                                                <comment pinned="false" h="80" w="160">Blinker und Coming Home nur wenn Eingang auf Masse</comment>
+                                                <value name="IF0">
+                                                  <block type="logic_compare" id="%_8/d5!@V`z|dF8/.^)F">
+                                                    <field name="OP">EQ</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="N3WMWVD;wUDKT.qO%,+n">
+                                                        <field name="VAR">iZvClose</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="logic_boolean" id="og7J+FgeYFMnM3.*T}aa">
+                                                        <field name="BOOL">FALSE</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                  <block type="variables_set" id="Ui#;KM6tO^.MW:1d~}0y">
+                                                    <field name="VAR">iBlinkCount</field>
+                                                    <value name="VALUE">
+                                                      <block type="variables_get" id="tD(x+IsgM*b2[7h4q{_]">
+                                                        <field name="VAR">cBlinkCountClose</field>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="variables_set" id="TLz!2qQ;H4JNFoN@Ns(=">
+                                                        <field name="VAR">iComingHomeCount</field>
+                                                        <value name="VALUE">
+                                                          <block type="variables_get" id=";c;qAxm/[]q)*w;f_3ZT">
+                                                            <field name="VAR">cComingHomeCount</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                                <next>
+                                  <block type="controls_if" id=";7DPyZh,K]XaWjYdA3Ci">
+                                    <comment pinned="false" h="80" w="160">Zustandsänderung von Zündung an/aus</comment>
+                                    <value name="IF0">
+                                      <block type="logic_compare" id="?rEMh0gibAzR{.!|_`|^">
+                                        <field name="OP">NEQ</field>
+                                        <value name="A">
+                                          <block type="variables_get" id="r8_6F.kSY+5Ad[TbrQU2">
+                                            <field name="VAR">iIgnition</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="variables_get" id="DY^bbspfQu.K(-OMi4I)">
+                                            <field name="VAR">iInitIgnition</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <statement name="DO0">
+                                      <block type="variables_set" id="h6t^Hwj(W_hjeT,}jv.R">
+                                        <field name="VAR">iInitIgnition</field>
+                                        <value name="VALUE">
+                                          <block type="variables_get" id="M3{+_V.B-LXM}E,Mr,IH">
+                                            <field name="VAR">iIgnition</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="serial_print" id="lH|-a;7F%,,O,^:;wm=b">
+                                            <field name="SERIAL_ID">Serial</field>
+                                            <field name="NEW_LINE">FALSE</field>
+                                            <value name="CONTENT">
+                                              <block type="text" id="tM!DrNqwr5v,aZxiFq}Q">
+                                                <field name="TEXT">Ignition changed to </field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="serial_print" id="JhPH[c~fON^:p:aBVs[z">
+                                                <field name="SERIAL_ID">Serial</field>
+                                                <field name="NEW_LINE">TRUE</field>
+                                                <value name="CONTENT">
+                                                  <block type="variables_get" id="7#U(IiF9c}E}g|xx7*-A">
+                                                    <field name="VAR">iIgnition</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="variables_set" id="T5^z7oj[4VaJ7]@Ig9U,">
+                                                    <field name="VAR">iBlinkCount</field>
+                                                    <value name="VALUE">
+                                                      <block type="math_number" id="YztrhCL)!10h:YXe1717">
+                                                        <field name="NUM">0</field>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="variables_set" id="Y.o?O@MH`SHrQ{?jnS4E">
+                                                        <field name="VAR">iComingHomeCount</field>
+                                                        <value name="VALUE">
+                                                          <block type="math_number" id="=UkiD4JOhrV2bn8D![ZW">
+                                                            <field name="NUM">0</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </statement>
+                                    <next>
+                                      <block type="controls_if" id="xEX/+ILvH8Ne|SGD1tp@">
+                                        <comment pinned="false" h="80" w="160">Bearbeiten der Ausgänge für Blinker und Coming Home nur alle 1/3 Sekunde</comment>
+                                        <value name="IF0">
+                                          <block type="logic_operation" id="V,/PNDiEDucAr}zSGb@r">
+                                            <field name="OP">OR</field>
+                                            <value name="A">
+                                              <block type="logic_compare" id="N|6FGpsF.v9)=3.mE0}Z">
+                                                <field name="OP">GT</field>
+                                                <value name="A">
+                                                  <block type="math_arithmetic" id="FW32#oT^^+0tm/d[v10s">
+                                                    <field name="OP">MINUS</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="}`Vb*2yhbaSImv~dDRL.">
+                                                        <field name="VAR">eTime</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="variables_get" id="e;?|TO9]A{bc-8%zhp_t">
+                                                        <field name="VAR">eTimeStart</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="math_number" id="8Kn[T=^q9)?=rMw#B=Jy">
+                                                    <field name="NUM">333</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="logic_compare" id=",kgU3/C]2x3Cyd:`ZG_Q">
+                                                <field name="OP">GT</field>
+                                                <value name="A">
+                                                  <block type="variables_get" id="kuo/kMa8qyzCl+qmis+s">
+                                                    <field name="VAR">eTimeStart</field>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="variables_get" id="g|6V=2S~C-uN;ce6~wq`">
+                                                    <field name="VAR">eTime</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <statement name="DO0">
+                                          <block type="variables_set" id=":Ag.adpUajhGm[C+nZY+">
+                                            <field name="VAR">eTimeStart</field>
+                                            <value name="VALUE">
+                                              <block type="variables_get" id="-z|h[mh=v91`MKjiINp+">
+                                                <field name="VAR">eTime</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="math_change" id="RP*%VKMY^{3TN#[{L/Z_">
+                                                <field name="VAR">iInfoCounter</field>
+                                                <value name="DELTA">
+                                                  <block type="math_number" id="7q;u7W9@i8YLH~XMr1V3">
+                                                    <field name="NUM">-1</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="controls_if" id="y({vPayFveZHeS05rKH3">
+                                                    <comment pinned="false" h="80" w="160">Regelmäßige Ausgabe des Programmstatus in der seriellen Konsole (nur alle 30 * 1/3 Sekunden)</comment>
+                                                    <value name="IF0">
+                                                      <block type="logic_compare" id="b:v;5dDh*J_hDxB3Fk(N">
+                                                        <field name="OP">EQ</field>
+                                                        <value name="A">
+                                                          <block type="variables_get" id="5c6,IUY=8~WKxDL}!mRc">
+                                                            <field name="VAR">iInfoCounter</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="B">
+                                                          <block type="math_number" id="V!wglGkCubmsY0RyXnQ9">
+                                                            <field name="NUM">0</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <statement name="DO0">
+                                                      <block type="variables_set" id="n3)uVKj4`iwJ#0)k0*r(">
+                                                        <field name="VAR">iInfoCounter</field>
+                                                        <value name="VALUE">
+                                                          <block type="math_number" id=")mTgE:^0a!:.o(?3.yeW">
+                                                            <field name="NUM">30</field>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="serial_print" id="fxJBusJv#nox_wdQ=~r/">
+                                                            <field name="SERIAL_ID">Serial</field>
+                                                            <field name="NEW_LINE">FALSE</field>
+                                                            <value name="CONTENT">
+                                                              <block type="text" id="*r!5=AODivvVW.lj}aYG">
+                                                                <field name="TEXT">Program running since </field>
+                                                              </block>
+                                                            </value>
+                                                            <next>
+                                                              <block type="serial_print" id="(:q,~[U8+nPz`orWkz@^">
+                                                                <field name="SERIAL_ID">Serial</field>
+                                                                <field name="NEW_LINE">FALSE</field>
+                                                                <value name="CONTENT">
+                                                                  <block type="variables_get" id="lKi2jQ0Ox.m:xETHqW!.">
+                                                                    <field name="VAR">eTime</field>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="serial_print" id="?)1r=pcLn`2rDP/rJ1US">
+                                                                    <field name="SERIAL_ID">Serial</field>
+                                                                    <field name="NEW_LINE">TRUE</field>
+                                                                    <value name="CONTENT">
+                                                                      <block type="text" id="vZ-G~7M%75lf=v4-+Q0x">
+                                                                        <field name="TEXT">ms</field>
+                                                                      </block>
+                                                                    </value>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </next>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </statement>
+                                                    <next>
+                                                      <block type="controls_if" id="5tO6UX11_lq%o5Dx=EBL">
+                                                        <mutation else="1"></mutation>
+                                                        <comment pinned="false" h="80" w="160">Erfassung der Messwerte des Helligkeitssensors und Mittelwert der Messungen berechnen</comment>
+                                                        <value name="IF0">
+                                                          <block type="logic_compare" id=",^X6Ez[Bi,x.z=Ry{SLe">
+                                                            <field name="OP">LT</field>
+                                                            <value name="A">
+                                                              <block type="variables_get" id="Oh{5H7fN-@ey3-)]#l_(">
+                                                                <field name="VAR">iLightValuesCount</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="B">
+                                                              <block type="variables_get" id="R+8|?t~f{2u32]hI86gI">
+                                                                <field name="VAR">cLightValuesCountNeeded</field>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                        <statement name="DO0">
+                                                          <block type="math_change" id="OlCr%l`cHnuYK0M7JC2Z">
+                                                            <field name="VAR">iLightValuesCount</field>
+                                                            <value name="DELTA">
+                                                              <block type="math_number" id="~Nwz8DCaZ)zWlG!5~y[7">
+                                                                <field name="NUM">1</field>
+                                                              </block>
+                                                            </value>
+                                                            <next>
+                                                              <block type="math_change" id="JHf(@0_etcl/i|c8)?E+">
+                                                                <field name="VAR">iLightValues</field>
+                                                                <value name="DELTA">
+                                                                  <block type="variables_get" id="?qQ_JQVA/E[FK%JP9^^;">
+                                                                    <field name="VAR">iLight</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </next>
+                                                          </block>
+                                                        </statement>
+                                                        <statement name="ELSE">
+                                                          <block type="variables_set" id="@Y@m7dk]zW%Jk-;y:xLC">
+                                                            <field name="VAR">iLightAverage</field>
+                                                            <value name="VALUE">
+                                                              <block type="math_arithmetic" id="j*l]B8w#(Jk?)Q%^f%}+">
+                                                                <field name="OP">DIVIDE</field>
+                                                                <value name="A">
+                                                                  <block type="variables_get" id="?6:aKGRCh03TPLf]huo_">
+                                                                    <field name="VAR">iLightValues</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="variables_get" id="L~]t0?0rIJFyMUyd.AFv">
+                                                                    <field name="VAR">iLightValuesCount</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                            <next>
+                                                              <block type="serial_print" id="%VDut_rCxVTKdj0=IKZR">
+                                                                <field name="SERIAL_ID">Serial</field>
+                                                                <field name="NEW_LINE">FALSE</field>
+                                                                <value name="CONTENT">
+                                                                  <block type="text" id="t:{M4KzD/8k~QHM1)L3T">
+                                                                    <field name="TEXT">Light average: </field>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="serial_print" id="Eb3Xq,;mW_r++S(]r{W#">
+                                                                    <field name="SERIAL_ID">Serial</field>
+                                                                    <field name="NEW_LINE">TRUE</field>
+                                                                    <value name="CONTENT">
+                                                                      <block type="variables_get" id="AwQq/Z!~|xr.;6scTZ%D">
+                                                                        <field name="VAR">iLightAverage</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="variables_set" id="9U/E/bv#?tWFb#6un;Z7">
+                                                                        <field name="VAR">iLightValues</field>
+                                                                        <value name="VALUE">
+                                                                          <block type="math_number" id="^QUomK3rJP-UG4M7#2H2">
+                                                                            <field name="NUM">0</field>
+                                                                          </block>
+                                                                        </value>
+                                                                        <next>
+                                                                          <block type="variables_set" id="~MA)5-Fo)?`_2;}gR5Hy">
+                                                                            <field name="VAR">iLightValuesCount</field>
+                                                                            <value name="VALUE">
+                                                                              <block type="math_number" id="1MUf21aL-bW]1IxGt_{m">
+                                                                                <field name="NUM">0</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </next>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </next>
+                                                          </block>
+                                                        </statement>
+                                                        <next>
+                                                          <block type="controls_if" id="iMT!pLO]3,N{H/hN*1RD">
+                                                            <mutation elseif="1"></mutation>
+                                                            <comment pinned="false" h="80" w="160">Ansteuerung des Blinker Ausgangs</comment>
+                                                            <value name="IF0">
+                                                              <block type="logic_compare" id="]A`[tu`K2zLW4zU-=/N}">
+                                                                <field name="OP">GT</field>
+                                                                <value name="A">
+                                                                  <block type="variables_get" id="Rs[t?d#y5E5Kxx.eVO0l">
+                                                                    <field name="VAR">iBlinkCount</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="math_number" id="/x5#/5,D#/O:-!!V-4CB">
+                                                                    <field name="NUM">0</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                            <statement name="DO0">
+                                                              <block type="serial_print" id="h!^Ove(*C!(uG.=ewSDq">
+                                                                <field name="SERIAL_ID">Serial</field>
+                                                                <field name="NEW_LINE">FALSE</field>
+                                                                <value name="CONTENT">
+                                                                  <block type="text" id="Nc#TnO%/A:ZyX{gQ)bi}">
+                                                                    <field name="TEXT">Blink count:</field>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="serial_print" id=":GD=k?E]^iqdpU]6avdZ">
+                                                                    <field name="SERIAL_ID">Serial</field>
+                                                                    <field name="NEW_LINE">TRUE</field>
+                                                                    <value name="CONTENT">
+                                                                      <block type="variables_get" id="Br;)wEKFC=@JZ*!?VM=9">
+                                                                        <field name="VAR">iBlinkCount</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="controls_if" id="4_J7[QSw}yz(Q2?#]FO=">
+                                                                        <mutation else="1"></mutation>
+                                                                        <value name="IF0">
+                                                                          <block type="math_number_property" id="G2V2y[kr+@Tv[]QXt%1!">
+                                                                            <mutation divisor_input="false"></mutation>
+                                                                            <field name="PROPERTY">ODD</field>
+                                                                            <value name="NUMBER_TO_CHECK">
+                                                                              <block type="variables_get" id="Kx/[!`_2OjDrK/ilW]f}">
+                                                                                <field name="VAR">iBlinkCount</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO0">
+                                                                          <block type="io_digitalwrite" id="GXGHWssw|s5O1EXJ3C%o">
+                                                                            <field name="PIN">32</field>
+                                                                            <value name="STATE">
+                                                                              <block type="io_highlow" id="U1@|kY]@,#cfmrWE`T8@">
+                                                                                <field name="STATE">HIGH</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </statement>
+                                                                        <statement name="ELSE">
+                                                                          <block type="io_digitalwrite" id="K{KeBVF#X}_%bmawa)*}">
+                                                                            <field name="PIN">32</field>
+                                                                            <value name="STATE">
+                                                                              <block type="io_highlow" id="O3zK~Gg0%q~H5MSF]**x">
+                                                                                <field name="STATE">LOW</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </statement>
+                                                                        <next>
+                                                                          <block type="math_change" id="~s!S@Nd%@DHA?qRfOD0z">
+                                                                            <field name="VAR">iBlinkCount</field>
+                                                                            <value name="DELTA">
+                                                                              <block type="math_number" id="^eihp;zCowEVV_YaG8BH">
+                                                                                <field name="NUM">-1</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </next>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </statement>
+                                                            <value name="IF1">
+                                                              <block type="logic_compare" id="4RF{uoHEFbkO@Z+i3!h+">
+                                                                <field name="OP">EQ</field>
+                                                                <value name="A">
+                                                                  <block type="variables_get" id="w7Jq79ZJ2.CXw,N;Jp!l">
+                                                                    <field name="VAR">iBlinkCount</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="math_number" id="NcOY4wo}N=yD0fnp/PU*">
+                                                                    <field name="NUM">0</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                            <statement name="DO1">
+                                                              <block type="math_change" id="m0P,zMX6j#}i!EXh3-Cf">
+                                                                <field name="VAR">iBlinkCount</field>
+                                                                <value name="DELTA">
+                                                                  <block type="math_number" id="JR1x?JVVf~uV9]^KguW;">
+                                                                    <field name="NUM">-1</field>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="serial_print" id="(1xQtXVdg,ftJ6N4lRDq">
+                                                                    <field name="SERIAL_ID">Serial</field>
+                                                                    <field name="NEW_LINE">TRUE</field>
+                                                                    <value name="CONTENT">
+                                                                      <block type="text" id=":TKNjcIO?+UM-Rl|v^,@">
+                                                                        <field name="TEXT">Blinking off</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="io_digitalwrite" id="y?OHG?f.P^Q]e!Yxap`8">
+                                                                        <field name="PIN">32</field>
+                                                                        <value name="STATE">
+                                                                          <block type="io_highlow" id="4nxYNL:Y]8QO,=Cs}TkH">
+                                                                            <field name="STATE">LOW</field>
+                                                                          </block>
+                                                                        </value>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </statement>
+                                                            <next>
+                                                              <block type="controls_if" id="@9IJln,4-Y-Y|I1y}!K4">
+                                                                <mutation elseif="1"></mutation>
+                                                                <comment pinned="false" h="80" w="160">Ansteuerung des Coming Home Ausgangs</comment>
+                                                                <value name="IF0">
+                                                                  <block type="logic_compare" id="*zPYC=)A^}cjig[z=~RM">
+                                                                    <field name="OP">GT</field>
+                                                                    <value name="A">
+                                                                      <block type="variables_get" id="g=#}~#FDg6KC9b1d9ZBl">
+                                                                        <field name="VAR">iComingHomeCount</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="B">
+                                                                      <block type="math_number" id="npsuv?~tu49Mk4lG:fpJ">
+                                                                        <field name="NUM">0</field>
+                                                                      </block>
+                                                                    </value>
+                                                                  </block>
+                                                                </value>
+                                                                <statement name="DO0">
+                                                                  <block type="math_change" id="_`bc8H5)yQ)l,:sq0y@j">
+                                                                    <field name="VAR">iComingHomeCount</field>
+                                                                    <value name="DELTA">
+                                                                      <block type="math_number" id="CQO{@xwMi.,qHHWBVn(:">
+                                                                        <field name="NUM">-1</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="controls_if" id="4dNjASUtbDhcADGRQ0kd">
+                                                                        <value name="IF0">
+                                                                          <block type="logic_compare" id="xdG@#RI4!`2!m@{/kaRH">
+                                                                            <field name="OP">EQ</field>
+                                                                            <value name="A">
+                                                                              <block type="variables_get" id="#-lM4AoW4DsoAIuQtyUb">
+                                                                                <field name="VAR">iComingHomeStatus</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <value name="B">
+                                                                              <block type="logic_boolean" id="8G!K(1mQyKP{^Va*?/jj">
+                                                                                <field name="BOOL">FALSE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO0">
+                                                                          <block type="variables_set" id="D1`=/ZDPQvB-RSN.KFfK">
+                                                                            <field name="VAR">iComingHomeStatus</field>
+                                                                            <value name="VALUE">
+                                                                              <block type="logic_boolean" id=";zC^WIjr~oH%o6yPT*)2">
+                                                                                <field name="BOOL">TRUE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="serial_print" id="^!SS]_41dH(G!d3!G3[w">
+                                                                                <field name="SERIAL_ID">Serial</field>
+                                                                                <field name="NEW_LINE">TRUE</field>
+                                                                                <value name="CONTENT">
+                                                                                  <block type="text" id="o=.2DEmh))-dX:x||1!)">
+                                                                                    <field name="TEXT">Coming home on</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </statement>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </statement>
+                                                                <value name="IF1">
+                                                                  <block type="logic_compare" id="fYoSvpM1UATmevwet*6*">
+                                                                    <field name="OP">EQ</field>
+                                                                    <value name="A">
+                                                                      <block type="variables_get" id="p/FPq335B1Oz/A2%IcH5">
+                                                                        <field name="VAR">iComingHomeCount</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="B">
+                                                                      <block type="math_number" id="tbKx:zXEq]O#.*Izh;3z">
+                                                                        <field name="NUM">0</field>
+                                                                      </block>
+                                                                    </value>
+                                                                  </block>
+                                                                </value>
+                                                                <statement name="DO1">
+                                                                  <block type="math_change" id="G{:,ICm9l;/gsd1B(Ic9">
+                                                                    <field name="VAR">iComingHomeCount</field>
+                                                                    <value name="DELTA">
+                                                                      <block type="math_number" id="R4*7wFm2gfGK|V#[Bgwt">
+                                                                        <field name="NUM">-1</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="controls_if" id="1==O/ts6~nD+gVxB2aA`">
+                                                                        <value name="IF0">
+                                                                          <block type="logic_compare" id="JIu,}2D3MpVwP^u93JMM">
+                                                                            <field name="OP">EQ</field>
+                                                                            <value name="A">
+                                                                              <block type="variables_get" id="RxlkXajOcVg@^8P#s@Kn">
+                                                                                <field name="VAR">iComingHomeStatus</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <value name="B">
+                                                                              <block type="logic_boolean" id="TB4wOnjOHDlE40/1:YBM">
+                                                                                <field name="BOOL">TRUE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO0">
+                                                                          <block type="variables_set" id="[id`M9*dd2*q=k7-y/[N">
+                                                                            <field name="VAR">iComingHomeStatus</field>
+                                                                            <value name="VALUE">
+                                                                              <block type="logic_boolean" id="]ev8m7LF=yIbDe{/y]~q">
+                                                                                <field name="BOOL">FALSE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="serial_print" id="cJUURVx6mWo?@eKuIS}=">
+                                                                                <field name="SERIAL_ID">Serial</field>
+                                                                                <field name="NEW_LINE">TRUE</field>
+                                                                                <value name="CONTENT">
+                                                                                  <block type="text" id="*oD]JheM90Ys~80[^Oe)">
+                                                                                    <field name="TEXT">Coming home off</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </statement>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </statement>
+                                                                <next>
+                                                                  <block type="controls_if" id=":*m?]tqB@iCa/pzh!H%t">
+                                                                    <mutation else="1"></mutation>
+                                                                    <comment pinned="false" h="80" w="160">Lichtautomatik</comment>
+                                                                    <value name="IF0">
+                                                                      <block type="logic_compare" id="8o6X{w9mKBF.W*:RJtyh">
+                                                                        <field name="OP">LT</field>
+                                                                        <value name="A">
+                                                                          <block type="variables_get" id="u-LiY0DMU=c^}wC{D0On">
+                                                                            <field name="VAR">iLightAverage</field>
+                                                                          </block>
+                                                                        </value>
+                                                                        <value name="B">
+                                                                          <block type="variables_get" id="/fkJaVS[OL:LCTRdCKi`">
+                                                                            <field name="VAR">cLightMinimum</field>
+                                                                          </block>
+                                                                        </value>
+                                                                      </block>
+                                                                    </value>
+                                                                    <statement name="DO0">
+                                                                      <block type="controls_if" id="b#_N5irvB@icpy5W[GJE">
+                                                                        <comment pinned="false" h="80" w="160">Es ist zu dunkel: Licht an</comment>
+                                                                        <value name="IF0">
+                                                                          <block type="logic_compare" id="G1Y(fMMojr7r]Iv}NtK[">
+                                                                            <field name="OP">EQ</field>
+                                                                            <value name="A">
+                                                                              <block type="variables_get" id="?b0:{jWPA)in9J4[s^!m">
+                                                                                <field name="VAR">iLightStatus</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <value name="B">
+                                                                              <block type="logic_boolean" id="c-b^^qT]CS9a+%1LNOc^">
+                                                                                <field name="BOOL">FALSE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO0">
+                                                                          <block type="variables_set" id="s+b`R9l;+dRgg5WDSV!U">
+                                                                            <field name="VAR">iLightStatus</field>
+                                                                            <value name="VALUE">
+                                                                              <block type="logic_boolean" id="6Pa7Aekeo`lg3vG@Af=K">
+                                                                                <field name="BOOL">TRUE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="serial_print" id="%n,/zPal{+wC}]ZO4oyn">
+                                                                                <field name="SERIAL_ID">Serial</field>
+                                                                                <field name="NEW_LINE">TRUE</field>
+                                                                                <value name="CONTENT">
+                                                                                  <block type="text" id="5GXe3,J96K(S+50I*y=6">
+                                                                                    <field name="TEXT">Licht an</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </statement>
+                                                                      </block>
+                                                                    </statement>
+                                                                    <statement name="ELSE">
+                                                                      <block type="controls_if" id="iY)#y3r{.O+e@/I?!J2W">
+                                                                        <comment pinned="false" h="80" w="160">Es ist hell genug: Licht aus</comment>
+                                                                        <value name="IF0">
+                                                                          <block type="logic_compare" id="L[Zzl_ESJx?oOpKYcMCD">
+                                                                            <field name="OP">EQ</field>
+                                                                            <value name="A">
+                                                                              <block type="variables_get" id="DC7rxT64k)N]]7oDsN_(">
+                                                                                <field name="VAR">iLightStatus</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <value name="B">
+                                                                              <block type="logic_boolean" id=";s6e6C#mbEf59ezqLLQ*">
+                                                                                <field name="BOOL">TRUE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO0">
+                                                                          <block type="variables_set" id="{BT=.lnj*IjqumtbvOlf">
+                                                                            <field name="VAR">iLightStatus</field>
+                                                                            <value name="VALUE">
+                                                                              <block type="logic_boolean" id="F}qSC1FU#C={Hj27L{r.">
+                                                                                <field name="BOOL">FALSE</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="serial_print" id="yL4k?=og.]Fya~2nCz{)">
+                                                                                <field name="SERIAL_ID">Serial</field>
+                                                                                <field name="NEW_LINE">TRUE</field>
+                                                                                <value name="CONTENT">
+                                                                                  <block type="text" id="S:j%YPBhD|D=3L.*9Z2l">
+                                                                                    <field name="TEXT">Licht aus</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </statement>
+                                                                      </block>
+                                                                    </statement>
+                                                                    <next>
+                                                                      <block type="controls_if" id="Hia;-,]Gr0zTBXF6i2Rt">
+                                                                        <mutation else="1"></mutation>
+                                                                        <comment pinned="false" h="80" w="160">Licht an / aus</comment>
+                                                                        <value name="IF0">
+                                                                          <block type="logic_operation" id="6=C6o`{D3t{7+sMQf20H">
+                                                                            <field name="OP">OR</field>
+                                                                            <value name="A">
+                                                                              <block type="logic_compare" id="s_UCM2tZ]*Nc+8|,a8W?">
+                                                                                <field name="OP">EQ</field>
+                                                                                <value name="A">
+                                                                                  <block type="variables_get" id="2Gnak7H[4L3iHKVNHT`)">
+                                                                                    <field name="VAR">iComingHomeStatus</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <value name="B">
+                                                                                  <block type="logic_boolean" id="f/}2H0Fxu^C1Y`=!d?|4">
+                                                                                    <field name="BOOL">TRUE</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </value>
+                                                                            <value name="B">
+                                                                              <block type="logic_compare" id="s.yM2)c%Bla{Vww,Jx9.">
+                                                                                <field name="OP">EQ</field>
+                                                                                <value name="A">
+                                                                                  <block type="variables_get" id="A~CXR{d93VArMUk1z;q6">
+                                                                                    <field name="VAR">iLightStatus</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <value name="B">
+                                                                                  <block type="logic_boolean" id="E9E5Q=W/|uHeBMQ|_#9A">
+                                                                                    <field name="BOOL">TRUE</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO0">
+                                                                          <block type="io_digitalwrite" id="o#rFG2-yJW9*lOk?sTS!">
+                                                                            <field name="PIN">33</field>
+                                                                            <value name="STATE">
+                                                                              <block type="io_highlow" id="{fg4*%3c?D63romp|liT">
+                                                                                <field name="STATE">HIGH</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </statement>
+                                                                        <statement name="ELSE">
+                                                                          <block type="io_digitalwrite" id="Qw7(j:QN|`2}GaTrHn:c">
+                                                                            <field name="PIN">33</field>
+                                                                            <value name="STATE">
+                                                                              <block type="io_highlow" id="nemJM94RvAJU{)4M]sLy">
+                                                                                <field name="STATE">LOW</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </statement>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </next>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </statement>
+                                        <next>
+                                          <block type="time_delay" id="2w{4ERs0:O,o,(5y{V/d">
+                                            <value name="DELAY_TIME_MILI">
+                                              <block type="math_number" id=",V?JKxMZRl-*U?c[UDSS">
+                                                <field name="NUM">25</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

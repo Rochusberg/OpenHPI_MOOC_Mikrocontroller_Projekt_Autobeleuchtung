@@ -1,0 +1,99 @@
+Projektbeschreibung "Autobeleuchtung" 
+
+
+Die Idee hinter diesem Versuchsaufbau war, einem älteren Auto einige angenehme Features zu verpassen,
+die bei aktuellen Fahrzeugen längst selbstverständlich sind. Das wären:
+
+- Blinkeransteuerung:
+  Aufleuchten der Blinker beim Ver- bzw. Entriegeln über die Funkfernbedienung
+  (zweimal Blinken beim Verriegeln, dreimal Blinken beim Entriegeln)
+- Coming-Home-Funktion:
+  Einschalten von Scheinwerfern und Schlussleuchten für einen gewissen Zeitraum
+  (beispielsweise 20 Sekunden, im Versuchsaufbau kürzer), um den Weg zur Haustüre auszuleuchten
+- Lichtautomatik:
+  Automatisches Einschalten der Scheinwerfer, wenn es dunkel wird
+
+
+Eingänge
+
+Es gibt einen analogen Eingang (34), an dem ein Spannungsteiler aus einem 10K-Widerstand und einem
+10K-Fotowiderstand als Lichtsensor angeschlossen ist. Dieser liefert je nach Helligkeit einen
+Wert zwischen 0 und 4095. Alle 1/3 Sekunde wird dieser Wert übernommen und über mehrere Sekunden
+aufsummiert. Liegt der Durchschnitt dieser Werte über mehrere Sekunden unter einem Schwellwert,
+wird der Ausgang für die Ansteuerung der Scheinwerfer eingeschaltet.
+
+Es gibt zwei digitale Eingänge, von denen jeweils einer vom Empfänger der Funkfernbedienung im Auto
+zum Verriegeln (19) bzw. zum Entriegeln (18) für ca. 0,1 bis 0,2 Sekunden auf Masse gezogen wird.
+Passiert das, werden die Blinker zwei- bzw. dreimal aufblinken lassen und zugleich die Coming-Home-
+Funktion aktiviert.
+
+Ein weiterer digitaler Eingang ist mit der Zündung verbunden (17). Sobald die Zündung eingeschaltet
+wird, soll die Coming-Home-Funktion sofort beendet und damit Scheinwerfer und Schlusslicht abgeschaltet
+werden, auch wenn die Zeit eigentlich noch nicht abgelaufen ist.
+
+
+Ausgänge
+
+Einer der digitalen Ausgänge steuert die Blinker an (32). Im Versuchsaufbau ist dies durch vier gelbe LEDs
+symbolisiert. In der realen Anwendung würden hier zwei Relais zum Einsatz kommen: eines für die
+Blinker links und eines für die Blinker rechts.
+
+Ein weiterer digitaler Ausgang steuert Scheinwerfer und Schlusslicht an (33). Im Versuchsaufbau ist dies
+durch zwei weiße und zwei rote LEDs symbolisiert. In der realen Anwendung würde hierfür ein kleines
+Relais zum Einsatz kommen, das dann wiederum das große Scheinwerferrelais des Fahrzeugs einschaltet.
+
+
+Besonderheiten
+
+Das Programm beinhaltet ein paar besondere Eigenschaften:
+
+- Beim Start des Programms im Mikrocontroller werden kurzzeitig die Blinker eingeschaltet, um den
+  Programmstart zu signalisieren.
+- Das Programm setzt die Zustände der digitalen Ausgänge nur dann (auf low oder high), wenn sich
+  tatsächlich eine Zustandsänderung ergeben hat. Dazu speichert es die letzten Zustandsänderungen
+  in entsprechenden Variablen.
+- Die Zahl der Blinksignale beim Ver- bzw. Entriegeln können im Programmkopf ebenso zentral
+  eingestellt werden, wie die Laufzeit der Coming-Home-Funktion oder die Anzahl der Messwerte vom
+  Lichtsensors, aus denen dann der Mittelwert gebildet wird.
+- Die Abfrage der Eingänge findet alle 25 Millisekunden statt, um auf jeden Fall die kurzen Signale
+  der Zentralverriegelung erfassen zu können, aber nicht mit dem maximalen Prozessortakt unnötig die
+  Eingänge abfragen zu müssen.
+- Das Schalten der Ausgänge, das Aufleuchten und Erlöschen der Blinker, sowie das Zählen der
+  Zeiten der Coming-Home-Funktion erfolgt jedoch nur jede 1/3 Sekunde. Dafür wird ständig die Laufzeit
+  des Programms über die Funktion millis() ermittelt und gespeichert.
+- Alle wesentlichen Aktionen, wie Veränderungen an den Ein- und Ausgängen oder das Herunterzählen
+  der Blinkvorgänge, werden über die serielle Konsole ausgegeben.
+- Quasi als "Lebenszeichen" gibt das Programm zusätzlich ca. alle 10 Sekunden die Laufzeit des
+  Programms über die serielle Konsole aus.
+
+
+Teileliste
+
+- 1 ESP32
+- 8 220kOhm-Widerstände (als LED-Vorwiderstände für den Versuchsaufbau)
+- 3 gelbe 3mm-LEDs (als Blinker für den Versuchsaufbau)
+- 2 weiße 5mm-LEDs (als Scheinwerfer für den Versuchsaufbau)
+- 2 rote 3mm-LEDs (als Schlusslichter für den Versuchsaufbau)
+- 3 10kOhm-Widerstände (als Pullup-Widerstände für die Taster und den Schalter)
+- 2 Taster (als Ersatz der Steuerleitung für die Zentralverriegelung im Versuchsaufbau)
+- 1 Schalter (als Ersatz der Spannung vom Zündschloss)
+- 1 Fotowiderstand GL5516 (10kOhm)
+- 1 Widerstand 10kOhm (für den Spannungsteiler Widerstand-Fotowiderstand)
+- Drahtbrücken
+- Breadboard
+- USB-A-2.0-auf-Mikro-USB-Kabel
+
+
+Versionen
+
+v1: Testversion
+
+v2: Fertige Version
+
+v3: Bugfix:
+Lichtautomatik funktioniert nur noch bei eingeschalteter Zündung, sonst würde das Auto
+grundsätzlich nachts und in der Garage immer die Scheinwerfer einschalten.
+
+v4: Bugfix:
+Die Coming-Home-Funktion wird nun auch beim Abschalten der Zündung aktiviert, so wie
+bei realen, modernen Autos üblich
